@@ -1,0 +1,17 @@
+name: test
+
+on:
+  push:
+    tags-ignore: '*'
+  pull_request:
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TZ: Asia/Tokyo
+    steps:
+      - run: sleep 30
+      - run: echo build
