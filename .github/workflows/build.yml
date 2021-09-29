@@ -16,5 +16,5 @@ jobs:
     env:
       TZ: Asia/Tokyo
     steps:
-      - run: sleep 30
+      - run: sleep 5
       - run: echo build
