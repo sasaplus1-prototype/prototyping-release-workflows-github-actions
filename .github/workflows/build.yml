@@ -1,4 +1,4 @@
-name: test
+name: build
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
   pull_request:
 
 jobs:
-  test:
-    name: test
+  build:
+    name: build
     runs-on: ubuntu-latest
     timeout-minutes: 5
     env:
