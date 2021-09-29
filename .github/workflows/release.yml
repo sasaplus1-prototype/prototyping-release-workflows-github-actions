@@ -1,0 +1,20 @@
+name: release
+
+on:
+  push:
+    branches-ignore:
+      - '**'
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      TZ: Asia/Tokyo
+    steps:
+      - run: sleep 30
+      - run: echo release
+
