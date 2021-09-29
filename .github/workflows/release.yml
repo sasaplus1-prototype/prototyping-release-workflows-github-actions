@@ -15,6 +15,24 @@ jobs:
     env:
       TZ: Asia/Tokyo
     steps:
-      - run: sleep 30
-      - run: echo release
-
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      # get version
+      - id: get-package-version
+        run: echo "::set-output name=version::$(node -p 'require(`./package`).version')"
+      # main process
+      - run: git worktree add ./archive archive
+      - run: mktemp ./archive/XXXXXXXX
+      - run: git config --global user.name 'GitHub Actions'
+      - run: git config --global user.email '<>'
+      - run: git add .
+        working-directory: ./archive
+      - run: git commit -m 'add new file'
+        working-directory: ./archive
+      - run: git tag archive-${{ steps.get-package-version.outputs.version }}
+        working-directory: ./archive
+      - run: git push origin archive archive-${{ steps.get-package-version.outputs.version }}
+        working-directory: ./archive
+      - run: git worktree remove ./archive
