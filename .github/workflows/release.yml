@@ -39,22 +39,12 @@ jobs:
         working-directory: ./archive
       - run: git worktree remove ./archive
       # setup gh
-      - id: gh
-        run: |
-         if type gh
-         then
-           echo "::set-output name=exists::true"
-         else
-           echo "::set-output name=exists::false"
-         fi
       - run: curl -fsSLO https://github.com/cli/cli/releases/download/v1.14.0/gh_1.14.0_linux_amd64.deb
-        if: ${{ steps.gh.outputs.exists == 'false' }}
       - run: sudo -E apt-get --yes update
-        if: ${{ steps.gh.outputs.exists == 'false' }}
       - run: sudo -E apt-get --yes install ./gh_1.14.0_linux_amd64.deb
-        if: ${{ steps.gh.outputs.exists == 'false' }}
+        continue-on-error: true
       - run: rm -f ./gh_1.14.0_linux_amd64.deb
-        if: ${{ steps.gh.outputs.exists == 'false' }}
+      - run: gh version
       - run: gh config set prompt disabled
       - run: printf -- '%s\n' '# ${{ steps.get-package-version.outputs.version }}' '' 'Hello' > NOTES.md
       - run: >
