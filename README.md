@@ -10,3 +10,7 @@ $ git push origin master v1.x.x
 ```
 
 That's all.
+
+## License
+
+The MIT license.
